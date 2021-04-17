@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%
 % This is altacv.cls (v1.4, 12 Apr 2021) written by
 % LianTze Lim (liantze@gmail.com).
+% Additionally, it takes some code from the fork by Nicolás Omar González Passerino (nicolas.passerino@gmail.com, 15 Oct 2020)
 %
 %% It may be distributed and/or modified under the
 %% conditions of the LaTeX Project Public License, either version 1.3
@@ -175,16 +176,16 @@
 \newcommand{\name}[1]{\def\@name{#1}}
 \newcommand{\tagline}[1]{\def\@tagline{#1}}
 \newcommand{\personalinfo}[1]{\def\@personalinfo{#1}}
-\NewInfoField{email}{\faAt}[mailto:]
-\NewInfoField{mailaddress}{\faEnvelope}
-\NewInfoField{phone}{\faPhone}[tel:]
-\NewInfoField{homepage}{\faGlobe}[https://]
+\NewInfoField{email}{\faAt[regular]}[mailto:]
+\NewInfoField{mailaddress}{\faEnvelope[regular]}
+\NewInfoField{phone}{\faPhone*[regular]}[tel:]
+\NewInfoField{homepage}{\faGlobe[regular]}[https://]
 \NewInfoField{twitter}{\faTwitter}[https://twitter.com/]
 \NewInfoField{linkedin}{\faLinkedin}[https://linkedin.com/in/]
 \NewInfoField{github}{\faGithub}[https://github.com/]
 % v1.?? Use fontawesome5 for Orcid symbol
 \NewInfoField{orcid}{\faOrcid}[https://orcid.org/]
-\NewInfoField{location}{\faMapMarker}
+\NewInfoField{location}{\faMapMarker*[regular]}
 
 % v1.2: Support for multiple photos
 \newlength{\altacv@photos@width}
@@ -198,7 +199,9 @@
     \if@normalphoto
       \includegraphics[width=\linewidth]{#2}
     \else
-      \tikz\path[fill overzoom image={#2}]circle[radius=0.5\linewidth];
+      % Fork: The photo image has modified to include a border around it, which color is aligned to document's theme
+      \tikz\filldraw[color=headingrule, fill overzoom image={#2}, ultra thick](-1,0) circle[radius=0.5\linewidth];
+      %\tikz\path[fill overzoom image={#2}]circle[radius=0.5\linewidth];
     \fi%
   \end{minipage}%
 }
@@ -269,8 +272,8 @@
   \ifstrequal{#2}{}{}{
   \textbf{\color{accent}#2}\par
   \smallskip}
-  \ifstrequal{#3}{}{}{{\small\makebox[0.5\linewidth][l]{\faCalendar~#3}}}%
-  \ifstrequal{#4}{}{}{{\small\makebox[0.5\linewidth][l]{\faMapMarker~#4}}}\par
+  \ifstrequal{#3}{}{}{{\small\makebox[0.5\linewidth][l]{\faCalendar*[regular]~#3}}}%
+  \ifstrequal{#4}{}{}{{\small\makebox[0.5\linewidth][l]{\faMapMarker*[regular]~#4}}}\par
   \medskip\normalsize
 }
 
@@ -282,8 +285,10 @@
   \smallskip
 }
 
+% Fork: Tags now have a more consistent vertical and horizontal separation
 \newcommand{\cvtag}[1]{%
-  \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+  \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,inner xsep=1ex,inner ysep=0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+  \vspace{0.25ex}
 }
 
 \newcommand{\cvskill}[2]{%
@@ -291,6 +296,14 @@
 \foreach \x in {1,...,5}{%
   \space{\ifnumgreater{\x}{#2}{\color{body!30}}{\color{accent}}\ratingmarker}}\par%
 }
+
+
+% Fork: Tag added for languages rating, avoiding star/button/progress bar previous ideas, I made a simpler and more accurate representation using a single string, which will be colored to be oustanding
+\newcommand{\cvlang}[2]{%
+    \textcolor{emphasis}{\textbf{#1: }}
+    \textcolor{body}{#2}
+}
+
 
 % Adapted from @Jake's answer at http://tex.stackexchange.com/a/82729/226
 \newcommand{\wheelchart}[4][0]{%
