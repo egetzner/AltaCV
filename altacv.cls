@@ -208,14 +208,14 @@
 
 \newcommand{\altacv@add@photo@left}[1]{%
   \appto{\altacv@left@photos}{%
-    \@makeaphoto{\altacv@photo@diam@left}{#1}\hspace{1ex}%
+    \hspace{2ex}\@makeaphoto{\altacv@photo@diam@left}{#1}\hspace{6,5ex}%
   }%
   \addtolength{\altacv@photos@width}{\altacv@photo@diam@left}%
   \addtolength{\altacv@photos@width}{1ex}%
 }
 \newcommand{\altacv@add@photo@right}[1]{%
   \appto{\altacv@right@photos}{%
-    \@makeaphoto{\altacv@photo@diam@right}{#1}\hspace{1ex}%
+    \@makeaphoto{\altacv@photo@diam@right}{#1}\hspace{6,5ex}%
   }%
   \addtolength{\altacv@photos@width}{\altacv@photo@diam@right}%
   \addtolength{\altacv@photos@width}{1ex}%
@@ -372,7 +372,7 @@
 
 \newenvironment{cvcolumn}[1]{\begin{minipage}[t]{#1}\raggedright}{\end{minipage}}
 
-\RequirePackage[backend=biber,style=authoryear,sorting=ydnt]{biblatex}
+\RequirePackage[backend=biber,style=authoryear,sorting=ydnt,maxnames=99]{biblatex}
 %% For removing numbering entirely when using a numeric style
 % \setlength{\bibhang}{1em}
 % \DeclareFieldFormat{labelnumberwidth}{\makebox[\bibhang][l]{\itemmarker}}
